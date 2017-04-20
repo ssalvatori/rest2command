@@ -1,0 +1,10 @@
+[
+  {
+  "url": "/change/TVN",
+  "command": "/opt/toTVN.sh"
+  },
+  {
+    "url": "/change/canal13",
+    "command": "/opt/toC13.sh"
+  }
+]
