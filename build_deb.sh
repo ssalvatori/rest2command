@@ -14,6 +14,7 @@ echo "Creating folders"
 mkdir -p target/${PACKAGE}/usr/bin
 mkdir -p target/${PACKAGE}/etc/init.d/
 mkdir -p target/${PACKAGE}/etc/rest2command
+mkdir -p target/${PACKAGE}/etc/default/
 
 echo "Copying files"
 cp dist/${BINARY} target/${PACKAGE}/usr/bin/rest2command
