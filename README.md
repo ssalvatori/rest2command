@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ssalvatori/rest2command.svg?branch=master)](https://travis-ci.org/ssalvatori/rest2command)
+
 [![Coverage Status](https://coveralls.io/repos/github/ssalvatori/rest2command/badge.svg?branch=master)](https://coveralls.io/github/ssalvatori/rest2command?branch=master)
 
 # rest2command
