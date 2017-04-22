@@ -1,6 +1,7 @@
 NAME="rest2command"
 VERSION=$(git describe --abbrev=0 --tags)
 PARSED_VERSION=$(echo $VERSION | sed "s/v//" | sed "s/\./_/g")
+VERSION_CONTROL=$(echo $VERSION | sed "s/v//")
 PACKAGE="${NAME}_${PARSED_VERSION}-1"
 BINARY="rest2command-linux-amd64"
 
@@ -22,7 +23,7 @@ echo "Control files"
 mkdir -p target/${PACKAGE}/DEBIAN
 cp control target/${PACKAGE}/DEBIAN/control
 sed -i "s/_PACKAGE_NAME_/${NAME}/g" target/${PACKAGE}/DEBIAN/control
-sed -i "s/_VERSION_/${PARSED_VERSION}-1/g" target/${PACKAGE}/DEBIAN/control
+sed -i "s/_VERSION_/${VERSION_CONTROL}-1/g" target/${PACKAGE}/DEBIAN/control
 
 echo "Setting permissions "
 chmod +x target/${PACKAGE}/usr/bin/rest2command
