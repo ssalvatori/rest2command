@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 NAME="rest2command"
 VERSION=$(git describe --abbrev=0 --tags)
 PARSED_VERSION=$(echo $VERSION | sed "s/v//" | sed "s/\./_/g")
@@ -18,7 +19,7 @@ echo "Copying files"
 cp dist/${BINARY} target/${PACKAGE}/usr/bin/rest2command
 cp dist/rest2command.sh target/${PACKAGE}/etc/init.d/rest2command
 cp configuration.json target/${PACKAGE}/etc/rest2command/
-cp dist/default.json target/${PACKAGE}/etc/default/rest2command
+cp dist/default target/${PACKAGE}/etc/default/rest2command
 
 echo "Control files"
 mkdir -p target/${PACKAGE}/DEBIAN
