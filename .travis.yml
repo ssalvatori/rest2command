@@ -8,7 +8,7 @@
  script:
    - $HOME/gopath/bin/goveralls -service=travis-ci
  after_success:
-   - $HOME/gopath/bin/gox -osarch="linux/amd64 linux/386" -cgo -ldflags "-X github.com/ssalvatori/http_server_go/server.Version=`git describe --tags` -X parse HEAD`" -output "dist/{{.Dir}}-{{.OS}}-{{.Arch}}"
+  - $HOME/gopath/bin/gox -osarch="linux/amd64 linux/386" -cgo -ldflags "-X github.com/ssalvatori/http_server_go/server.Version=`git describe --tags` -X github.com/ssalvatori/http_server_go/server.BuildTime=`TZ=UTC date -u '+%Y-%m-%dT%H:%M:%SZ'` -X github.com/ssalvatori/http_server_go/server.GitHash=`git rev-parse HEAD`" -output "dist/{{.Dir}}-{{.OS}}-{{.Arch}}"
  deploy:
    provider: releases
    skip_cleanup: true
