@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/ssalvatori/http_server_go.svg?branch=master)](https://travis-ci.org/ssalvatori/http_server_go)
-[![Coverage Status](https://coveralls.io/repos/github/ssalvatori/http_server_go/badge.svg?branch=master)](https://coveralls.io/github/ssalvatori/http_server_go?branch=master)
+[![Build Status](https://travis-ci.org/ssalvatori/rest2command.svg?branch=master)](https://travis-ci.org/ssalvatori/rest2command)
+[![Coverage Status](https://coveralls.io/repos/github/ssalvatori/rest2command/badge.svg?branch=master)](https://coveralls.io/github/ssalvatori/rest2command?branch=master)
 
-# http_server_go
-Http server written in golang to execute some commands 
+# rest2command
+Http server written in golang to execute some command
 
 # Environment variables
 
@@ -25,3 +25,6 @@ FILE_CONFIGURATION (default ./configuration.json)
   }
 ]
 ```
+
+# Files
+* dist/rest2command.sh (init.d file)
