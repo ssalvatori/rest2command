@@ -29,4 +29,5 @@ echo "Setting permissions "
 chmod +x target/${PACKAGE}/usr/bin/rest2command
 chmod +x target/${PACKAGE}/etc/init.d/rest2command
 cd target && dpkg-deb --build ${PACKAGE}
+ls 
 mv ${PACKAGE}_amd64.deb ../dist/
