@@ -8,7 +8,7 @@
 # Description:       <DESCRIPTION>
 ### END INIT INFO
 
-SCRIPT=rest2command
+SCRIPT=/usr/bin/rest2command
 RUNAS=root
 
 PIDFILE=/var/run/rest2command.pid
