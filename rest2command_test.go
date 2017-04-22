@@ -34,17 +34,17 @@ func TestBuildCommands(t *testing.T) {
 func TestSetUp(t *testing.T) {
 
 	setUp()
-	assert.Equal(t, ":8891",Port,"default port")
-	assert.Equal(t, "./configuration.json", ConfigurationFile, "default configuration file")
+	assert.Equal(t, ":9999",Port,"default port")
+	assert.Equal(t, "/etc/rest2command/configuration.json", ConfigurationFile, "default configuration file")
 	assert.Equal(t, "./credentials.json", CredentialsFile, "default credentials")
 
 
 	os.Setenv("PORT", "123")
-	os.Setenv("FILE_CONFIGURATION", "/etc/rest2command/configuration.json")
+	os.Setenv("FILE_CONFIGURATION", "./configuration.json")
 	os.Setenv("FILE_CREDENTIALS", "/etc/rest2command/credentials.json")
 	setUp()
 	assert.Equal(t, ":123",Port,"Setting port")
-	assert.Equal(t, "/etc/rest2command/configuration.json", ConfigurationFile, "Setting configuration file")
+	assert.Equal(t, "./configuration.json", ConfigurationFile, "Setting configuration file")
 	assert.Equal(t, "/etc/rest2command/credentials.json", CredentialsFile, "Setting credentials")
 
 
