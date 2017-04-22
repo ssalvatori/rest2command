@@ -1,0 +1,7 @@
+Package: _PACKAGE_NAME_
+Version: _VERSION_
+Section: unknown
+Priority: optional
+Architecture: amd64
+Maintainer: Stefano Salvatori <ssalvatori@gmail.com>
+Description: rest2command

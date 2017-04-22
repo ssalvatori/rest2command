@@ -58,6 +58,7 @@ func TestSetUpLog(t *testing.T) {
 		"panic": "panic",
 		"error": "error",
 		"warn": "warning",
+		"fatal": "fatal",
 		"": "info",
 	}
 	for key, value := range levels {
