@@ -4,3 +4,24 @@
 # http_server_go
 Http server written in golang to execute some commands 
 
+# Environment variables
+
+```bash
+LOG_LEVEL (debgu|info|warn|error|fatal)
+PORT (default 8891)
+FILE_CONFIGURATION (default ./configuration.json)
+```
+
+# Configuration file
+```json
+[
+  {
+  "url": "/change/opt1",
+  "command": "/opt/opt1.sh"
+  },
+  {
+    "url": "/change/opt2",
+    "command": "/opt/opt2.sh"
+  }
+]
+```

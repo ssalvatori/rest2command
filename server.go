@@ -20,7 +20,7 @@ import (
 var (
 	Port = ":8891"
 	ConfigurationFile = "./configuration.json"
-	Version = "0.0.0"
+	Version = "1.0.0"
 	BuildTime = time.Now().String()
 	GitHash   = "undefined"
 	API_Version = ""
