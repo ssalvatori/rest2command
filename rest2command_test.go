@@ -4,6 +4,7 @@ import (
 	"testing"
 	"github.com/stretchr/testify/assert"
 	"os"
+	log "github.com/Sirupsen/logrus"
 )
 
 func TestGetAPIVersion(t *testing.T) {
@@ -13,11 +14,11 @@ func TestGetAPIVersion(t *testing.T) {
 
 func TestBuildCommands(t *testing.T) {
 	var configurations = []Configuration{
-		Configuration{
+		{
 			Url:     "/v1/command1",
 			Command: "/opt/command1",
 		},
-		Configuration{
+		{
 			Url:     "/v1/command2",
 			Command: "/opt/command2 -arg1 arg2",
 		},
@@ -46,5 +47,23 @@ func TestSetUp(t *testing.T) {
 	assert.Equal(t, "/etc/rest2command/configuration.json", ConfigurationFile, "Setting configuration file")
 	assert.Equal(t, "/etc/rest2command/credentials.json", CredentialsFile, "Setting credentials")
 
+
+}
+
+func TestSetUpLog(t *testing.T) {
+
+	levels := map[string]string {
+		"info": "info",
+		"debug": "debug",
+		"panic": "panic",
+		"error": "error",
+		"warn": "warning",
+		"": "info",
+	}
+	for key, value := range levels {
+		os.Setenv("LOG_LEVEL", key)
+		setUpLog()
+		assert.Equal(t, log.GetLevel().String(), value, key + "OK")
+	}
 
 }
