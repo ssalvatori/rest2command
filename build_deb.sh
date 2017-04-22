@@ -27,5 +27,5 @@ sed -i "s/_VERSION_/${VERSION}-1/g" target/${PACKAGE}/DEBIAN/control
 echo "Setting permissions "
 chmod +x target/${PACKAGE}/usr/bin/rest2command
 chmod +x target/${PACKAGE}/etc/init.d/rest2command
-cd target && dpkg-deb --build target/${PACKAGE}
-mv ${PACKAGE}_amd64.deb dist/
+cd target && dpkg-deb --build ${PACKAGE}
+mv ${PACKAGE}_amd64.deb ../dist/
