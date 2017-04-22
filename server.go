@@ -14,15 +14,23 @@ import (
 	"regexp"
 	"fmt"
 
+	"os/exec"
 )
 
 var (
 	Port = ":8891"
 	ConfigurationFile = "./configuration.json"
 	Version = "0.0.0"
+	BuildTime = time.Now().String()
+	GitHash   = "undefined"
 	API_Version = ""
 	CredentialsFile = "./credentials.json"
 )
+
+type Configuration struct {
+	Url string `json:"url"`
+	Command   string `json:"command"`
+}
 
 func main() {
 
@@ -41,7 +49,6 @@ func main() {
 	}
 
 	go func() {
-		// service connections
 		err := srv.ListenAndServe()
 
 		if  err != nil {
@@ -58,11 +65,6 @@ func main() {
 
 	log.Info("Server gracefully stopped")
 
-}
-
-type Configuration struct {
-	Url string `json:"url"`
-	Command   string `json:"command"`
 }
 
 func getConfigurations() []Configuration {
@@ -95,14 +97,27 @@ func buildHandlers() *http.ServeMux {
 	commands := buildCommands()
 
 	for key := range commands {
+		//TODO wrap handlerfunc to check credentials and log information
+		// https://medium.com/@matryer/the-http-handlerfunc-wrapper-technique-in-golang-c60bf76e6124
 		mux.Handle(key, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request, ) {
-			log.Debug("Command: ", commands[r.RequestURI])
-			log.Debug("Request origin: ", r.RemoteAddr)
-			io.WriteString(w, "Finished!")
+			out := runCommand(commands[r.RequestURI])
+			io.WriteString(w, out)
 		}))
 	}
 
 	return mux
+}
+
+func runCommand(cmd string) string {
+	log.Debug("Cmd: ",cmd)
+	out, err := exec.Command(cmd).Output()
+	if err != nil {
+		log.Error(err)
+		out = []byte("error")
+	}
+	log.Debug("Out: ", fmt.Sprintf("%s",out))
+
+	return fmt.Sprintf("%s",out)
 }
 
 func setUp() {
