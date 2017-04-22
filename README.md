@@ -8,7 +8,7 @@ Http server written in golang to execute some command
 # Environment variables
 
 ```bash
-LOG_LEVEL (debgu|info|warn|error|fatal)
+LOG_LEVEL (debug|info|warn|error|fatal)
 PORT (default 8891)
 FILE_CONFIGURATION (default ./configuration.json)
 ```

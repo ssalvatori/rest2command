@@ -14,6 +14,8 @@ RUNAS=root
 PIDFILE=/var/run/rest2command.pid
 LOGFILE=/var/log/rest2command.log
 
+[ -f /etc/default/rest2command ] && . /etc/default/rest2command
+
 start() {
     if [ -f "$PIDFILE" ] && kill -0 $(cat "$PIDFILE"); then
         echo 'Service already running' >&2

@@ -18,8 +18,8 @@ import (
 )
 
 var (
-	Port = ":8891"
-	ConfigurationFile = "./configuration.json"
+	Port = ":9999"
+	ConfigurationFile = "/etc/rest2command/configuration.json"
 	Version = "1.0.0"
 	BuildTime = time.Now().String()
 	GitHash   = "undefined"
@@ -67,8 +67,9 @@ func main() {
 
 }
 
-func getConfigurations() []Configuration {
-	raw, err := ioutil.ReadFile(ConfigurationFile)
+func getConfigurations(configuration string) []Configuration {
+	log.Debug("Loading file ",configuration)
+	raw, err := ioutil.ReadFile(configuration)
 	if err != nil {
 		log.Fatal(err.Error())
 		os.Exit(1)
@@ -94,7 +95,7 @@ func buildHandlers() *http.ServeMux {
 	mux := http.NewServeMux()
 	log.Info("Setting handlers")
 
-	commands := buildCommands(getConfigurations())
+	commands := buildCommands(getConfigurations(ConfigurationFile))
 
 	for key := range commands {
 		//TODO wrap handlerfunc to check credentials and log information

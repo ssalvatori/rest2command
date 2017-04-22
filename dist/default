@@ -1,0 +1,3 @@
+LOG_LEVEL=debug
+#FILE_CONFIGURATION=/etc/rest2command/configuration.json
+#PORT=9991
