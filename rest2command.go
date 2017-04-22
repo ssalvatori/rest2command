@@ -79,10 +79,10 @@ func getConfigurations() []Configuration {
 	return c
 }
 
-func buildCommands() map[string]string {
+func buildCommands(configurations  []Configuration) map[string]string {
 	commands := make(map[string] string)
 
-	for _, configuration := range getConfigurations() {
+	for _, configuration := range configurations {
 		log.Debug(API_Version+configuration.Url, " -> ", configuration.Command)
 		commands[API_Version+configuration.Url] = configuration.Command
 	}
@@ -94,7 +94,7 @@ func buildHandlers() *http.ServeMux {
 	mux := http.NewServeMux()
 	log.Info("Setting handlers")
 
-	commands := buildCommands()
+	commands := buildCommands(getConfigurations())
 
 	for key := range commands {
 		//TODO wrap handlerfunc to check credentials and log information
