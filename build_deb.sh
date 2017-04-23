@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 NAME="rest2command"
 VERSION=$(git describe --abbrev=0 --tags)
-PARSED_VERSION=$(echo $VERSION | sed "s/v//" | sed "s/\./_/g")
-VERSION_CONTROL=$(echo $VERSION | sed "s/v//")
+PARSED_VERSION=$(echo ${VERSION} | sed "s/v//" | sed "s/\./_/g")
+VERSION_CONTROL=$(echo ${VERSION} | sed "s/v//")
 PACKAGE="${NAME}_${PARSED_VERSION}-1"
 BINARY="rest2command-linux-amd64"
 
 rm -rf target/
 
-echo "Package: "$PACKAGE
+echo "Package: "${PACKAGE}
 
 echo "Creating folders"
 mkdir -p target/${PACKAGE}/usr/bin
@@ -19,7 +19,6 @@ mkdir -p target/${PACKAGE}/etc/default/
 echo "Copying files"
 cp dist/${BINARY} target/${PACKAGE}/usr/bin/rest2command
 cp dist/rest2command.sh target/${PACKAGE}/etc/init.d/rest2command
-cp configuration.json target/${PACKAGE}/etc/rest2command/
 cp default target/${PACKAGE}/etc/default/rest2command
 
 echo "Control files"

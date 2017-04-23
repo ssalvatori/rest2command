@@ -28,8 +28,13 @@ var (
 )
 
 type Configuration struct {
-	Url string `json:"url"`
-	Command   string `json:"command"`
+	Url     string `json:"url"`
+	Command string `json:"command"`
+	Args    string `json:"args"`
+}
+type Command struct {
+	Command string
+	Args    string
 }
 
 func main() {
@@ -80,12 +85,15 @@ func getConfigurations(configuration string) []Configuration {
 	return c
 }
 
-func buildCommands(configurations  []Configuration) map[string]string {
-	commands := make(map[string] string)
+func buildCommands(configurations []Configuration) map[string]Command {
+	commands := make(map[string]Command)
 
 	for _, configuration := range configurations {
 		log.Debug(API_Version+configuration.Url, " -> ", configuration.Command)
-		commands[API_Version+configuration.Url] = configuration.Command
+		commands[API_Version+configuration.Url] = Command{
+			Command: configuration.Command,
+			Args:    configuration.Args,
+		}
 	}
 
 	return commands
@@ -109,9 +117,10 @@ func buildHandlers() *http.ServeMux {
 	return mux
 }
 
-func runCommand(cmd string) string {
-	log.Debug("Cmd: ",cmd)
-	out, err := exec.Command(cmd).Output()
+func runCommand(cmd Command) string {
+	log.Debug("Cmd: ", cmd.Command, " Args ", cmd.Args)
+
+	out, err := exec.Command(cmd.Command, cmd.Args).Output()
 	if err != nil {
 		log.Error(err)
 		out = []byte("error")

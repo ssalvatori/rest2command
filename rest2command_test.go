@@ -13,22 +13,28 @@ func TestGetAPIVersion(t *testing.T) {
 }
 
 func TestBuildCommands(t *testing.T) {
+
 	var configurations = []Configuration{
 		{
 			Url:     "/v1/command1",
 			Command: "/opt/command1",
+			Args:    "arg1 arg2",
 		},
 		{
 			Url:     "/v1/command2",
-			Command: "/opt/command2 -arg1 arg2",
+			Command: "/opt/command2",
 		},
 	}
 
-	var commands = map[string]string{
-		"/v1/command1": "/opt/command1",
-		"/v1/command2": "/opt/command2 -arg1 arg2",
+	var commands = map[string]Command{
+		"/v1/command1": {Command: "/opt/command1", Args: "arg1 arg2"},
+		"/v1/command2": {Command: "/opt/command2", Args: ""},
 	}
-	assert.Equal(t, commands, buildCommands(configurations), "build commands")
+
+	//
+	commandsResult := buildCommands(configurations)
+	assert.Equal(t, commands, commandsResult, "build command")
+
 }
 
 func TestSetUp(t *testing.T) {

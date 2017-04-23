@@ -7,7 +7,7 @@ Http server written in golang to execute some command
 
 # Environment variables
 
-```bash
+```
 LOG_LEVEL (debug|info|warn|error|fatal)
 PORT (default 8891)
 FILE_CONFIGURATION (default ./configuration.json)
@@ -18,7 +18,8 @@ FILE_CONFIGURATION (default ./configuration.json)
 [
   {
   "url": "/change/opt1",
-  "command": "/opt/opt1.sh"
+  "command": "/opt/opt1.sh",
+  "args": "args1 args2"
   },
   {
     "url": "/change/opt2",
@@ -26,6 +27,3 @@ FILE_CONFIGURATION (default ./configuration.json)
   }
 ]
 ```
-
-# Files
-* dist/rest2command.sh (init.d file)

@@ -1,10 +1,11 @@
 [
   {
-  "url": "/change/TVN",
-  "command": "/opt/toTVN.sh"
+    "url": "/change/TVN",
+    "command": "/opt/toTVN.sh"
   },
   {
     "url": "/change/canal13",
-    "command": "/opt/toC13.sh"
+    "command": "/Users/stefano/source/go/http_server_go/src/github.com/ssalvatori/http_server_go/tmp/toC13.sh",
+    "args": "args2 args3 args4"
   }
 ]
