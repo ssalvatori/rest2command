@@ -1,30 +1,34 @@
 package main
 
 import (
-	"encoding/json"
 	"context"
+	"encoding/json"
 	"io"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
-	log "github.com/Sirupsen/logrus"
 
+	"fmt"
 	"io/ioutil"
 	"regexp"
-	"fmt"
 
 	"os/exec"
+
+	"log/syslog"
+	log "github.com/Sirupsen/logrus"
+	logrus_syslog "github.com/Sirupsen/logrus/hooks/syslog"
+
 )
 
 var (
-	Port = ":9999"
+	Port              = ":9999"
 	ConfigurationFile = "/etc/rest2command/configuration.json"
-	Version = "1.0.0"
-	BuildTime = time.Now().String()
-	GitHash   = "undefined"
-	API_Version = ""
-	CredentialsFile = "./credentials.json"
+	Version           = "1.0.0"
+	BuildTime         = time.Now().String()
+	GitHash           = "undefined"
+	API_Version       = ""
+	CredentialsFile   = "./credentials.json"
 )
 
 type Configuration struct {
@@ -49,14 +53,14 @@ func main() {
 	mux := buildHandlers()
 
 	srv := &http.Server{
-		Addr:	Port,
+		Addr:    Port,
 		Handler: mux,
 	}
 
 	go func() {
 		err := srv.ListenAndServe()
 
-		if  err != nil {
+		if err != nil {
 			log.Info("listen: %s\n", err.Error())
 		}
 	}()
@@ -73,7 +77,7 @@ func main() {
 }
 
 func getConfigurations(configuration string) []Configuration {
-	log.Debug("Loading file ",configuration)
+	log.Debug("Loading file ", configuration)
 	raw, err := ioutil.ReadFile(configuration)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -108,7 +112,7 @@ func buildHandlers() *http.ServeMux {
 	for key := range commands {
 		//TODO wrap handlerfunc to check credentials and log information
 		// https://medium.com/@matryer/the-http-handlerfunc-wrapper-technique-in-golang-c60bf76e6124
-		mux.Handle(key, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request, ) {
+		mux.Handle(key, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			out := runCommand(commands[r.RequestURI])
 			io.WriteString(w, out)
 		}))
@@ -125,14 +129,14 @@ func runCommand(cmd Command) string {
 		log.Error(err)
 		out = []byte("error")
 	}
-	log.Debug("Out: ", fmt.Sprintf("%s",out))
+	log.Debug("Out: ", fmt.Sprintf("%s", out))
 
-	return fmt.Sprintf("%s",out)
+	return fmt.Sprintf("%s", out)
 }
 
 func setUp() {
 	if os.Getenv("PORT") != "" {
-		Port = ":"+os.Getenv("PORT")
+		Port = ":" + os.Getenv("PORT")
 	}
 	if os.Getenv("FILE_CONFIGURATION") != "" {
 		ConfigurationFile = os.Getenv("FILE_CONFIGURATION")
@@ -141,8 +145,8 @@ func setUp() {
 		CredentialsFile = os.Getenv("FILE_CREDENTIALS")
 	}
 
-	API_Version = fmt.Sprintf("/v%s",getAPIVersion(Version))
-	log.Info("Context: ",API_Version)
+	API_Version = fmt.Sprintf("/v%s", getAPIVersion(Version))
+	log.Info("Context: ", API_Version)
 }
 
 func getAPIVersion(version string) string {
@@ -179,5 +183,14 @@ func setUpLog() {
 		log.SetLevel(log.InfoLevel)
 		break
 	}
+
+	log := log.New()
+	hook, err := logrus_syslog.NewSyslogHook("", "", syslog.LOG_INFO|syslog.LOG_ERR|syslog.LOG_DEBUG, "")
+
+	if err == nil {
+		log.Hooks.Add(hook)
+	}
+
+	log.Warning("asfas")
 
 }
